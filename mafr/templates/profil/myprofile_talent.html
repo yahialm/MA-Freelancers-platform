@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">
+      <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}'s Profile</h2>
+    </div>
+    <div class="card-body">
+      <p><strong>Email:</strong> {{ profile.user.email }}</p>
+      <p><strong>Specialization:</strong> {{ profile.specialization }}</p>
+      <p><strong>GitHub:</strong> 
+        <a href="{{ profile.github_url }}" class="btn btn-outline-success" target="_blank">{{ profile.github_url }}</a>
+      </p>
+      <p><strong>LinkedIn:</strong> 
+        <a href="{{ profile.linkedin_url }}" class="btn btn-outline-success" target="_blank">{{ profile.linkedin_url }}</a>
+      </p>
+    </div>
+  </div>
+
+  <h3>Your Projects</h3>
+  <div class="mb-3">
+    <a href="{% url 'get_all_projects' profile.user.id %}" class="btn btn-info">View your projects</a>
+    <a href="{% url 'create_project' %}" class="btn btn-primary">Create New Project</a>
+  </div>
+{% endblock %}

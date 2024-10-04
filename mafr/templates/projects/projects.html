@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Your Projects</h2>
+
+    {% if projects %}
+      <ul class="list-group mb-4">
+        {% for project in projects %}
+          <li class="list-group-item">
+            <a href="{% url 'get_project' project.user.id project.id %}" class="text-decoration-none">{{ project.title }}</a> 
+            - {{ project.description|truncatewords:10 }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="alert alert-info" role="alert">
+        <p>You have no projects yet.</p>
+      </div>
+    {% endif %}
+    
+    {% if is_owner %}
+      <a href="{% url 'create_project' %}" class="btn btn-primary">Create New Project</a>
+    {% endif %}
+  </div>
+{% endblock %}

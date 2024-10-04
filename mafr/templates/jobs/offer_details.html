@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ offer.title }}</h2>
+                <p><strong>Posted by:</strong> {{ offer.employer.first_name }} {{ offer.employer.last_name }}</p>
+            </div>
+            <div class="card-body">
+                <p><strong>Description:</strong> {{ offer.description }}</p>
+
+                <p><strong>Required Skills:</strong> {{ offer.required_skills }}</p>
+
+                <p><strong>Salary:</strong> 
+                    {% if offer.salary %}
+                        {{ offer.salary }} MAD
+                    {% else %}
+                        Not specified
+                    {% endif %}
+                </p>
+
+                <p><strong>Location:</strong> {{ offer.location }}</p>
+
+                <p><strong>Application Deadline:</strong> {{ offer.deadline }}</p>
+
+                <p><strong>Posted on:</strong> {{ offer.created_at }}</p>
+            </div>
+
+            <div class="card-footer">
+                {% if request.user.role == 'talent' %}
+                    <a href="{% url 'create_job_application' offer.id %}" class="btn btn-primary">Apply for this job</a>
+                {% endif %}
+                <a href="{% url 'get_all_offers' %}" class="btn btn-secondary">Back to all offers</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

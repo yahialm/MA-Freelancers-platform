@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2>Applications for {{ job.title }}</h2>
+
+    {% if applications %}
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Talent</th>
+                        <th>Cover Letter</th>
+                        <th>CV</th>
+                        <th>Date Applied</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                        <tr>
+                            <td>{{ application.talent.first_name }} {{ application.talent.last_name }}</td>
+                            <td>{{ application.cover_letter|truncatewords:20 }}</td>
+                            <td>
+                                {% if application.cv %}
+                                    <a href="{{ application.cv.url }}" target="_blank" class="btn btn-secondary">View CV</a>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>{{ application.applied_at|date:"M d, Y" }}</td>
+                            <td>{{ application.status }}</td>
+                            <td>
+                                <a href="{% url 'update_application_status' application.id %}" class="btn btn-primary">Update Status</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No applications received yet.</p>
+    {% endif %}
+{% endblock %}

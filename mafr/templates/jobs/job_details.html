@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{{ job.title }}</h2>
+
+    <p><strong>Description:</strong> {{ job.description }}</p>
+    <p><strong>Required Skills:</strong> {{ job.required_skills|join:", " }}</p>
+    
+    {% if job.salary %}
+      <p><strong>Salary:</strong> {{ job.salary }}</p>
+    {% else %}
+      <p><strong>Salary:</strong> Not specified</p>
+    {% endif %}
+
+    <p><strong>Location:</strong> {{ job.location }}</p>
+    <p><strong>Posted on:</strong> {{ job.created_at }}</p>
+    <p><strong>Application Deadline:</strong> {{ job.deadline }}</p>
+
+    <hr>
+
+    <p><strong>Posted by:</strong> {{ job.employer.first_name }} {{ job.employer.last_name }} 
+       (<a href="{% url 'visit_profile' job.employer.id %}">View Employer Profile</a>)</p>
+
+    <hr>
+
+    <div class="d-flex gap-2">
+      {% if request.user.role == 'employer' and job.employer == request.user %}
+        <a href="{% url 'track_job' job.id %}" class="btn btn-primary">All Applications</a>
+        <a href="{% url 'update_job' job.id %}" class="btn btn-warning">Update Job</a>
+        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete Job</a>
+      {% endif %}
+
+      {% if request.user.role == 'talent' %}
+        <a href="{% url 'create_job_application' job.id %}" class="btn btn-success">Apply</a>
+      {% endif %}
+      
+      <a href="{% url 'get_jobs' %}" class="btn btn-secondary">Back to Jobs</a>
+    </div>
+  </div>
+{% endblock %}

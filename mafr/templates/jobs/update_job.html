@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <h2>Edit Project: {{ job.title }}</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Job</button>
+  </form>
+
+  <a href="{% url 'get_jobs' %}">Back to Jobs</a>
+{% endblock %}

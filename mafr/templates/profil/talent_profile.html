@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2>{{ user.username }} 's Talent Profile</h2>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Specialization:</strong> {{ profile.specialization }}</p>
+
+    <p><strong>GitHub:</strong> 
+        <a href="{{ profile.github_url }}" target="_blank">{{ profile.github_url }}</a>
+    </p>
+
+    <p><strong>LinkedIn:</strong> 
+        <a href="{{ profile.linkedin_url }}" target="_blank">{{ profile.linkedin_url }}</a>
+    </p>
+
+{% endblock %}
